@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { companies, glossary } from "@/lib/content";
 
-const baseUrl = "https://ai-training-atlas.vercel.app";
+const baseUrl = "https://ai-training-industry-research.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = ["", "/foundations", "/foundations/model-lifecycle", "/glossary", "/companies", "/ecosystem", "/dashboard", "/news", "/search"];
