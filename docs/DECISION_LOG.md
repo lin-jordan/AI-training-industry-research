@@ -1,0 +1,20 @@
+# Decision Log
+
+This log records durable product, architecture, research, and design decisions. Add a row when a choice changes how future work should be implemented or reviewed.
+
+| ID | Date | Decision | Status | Rationale | Consequences |
+|---|---|---|---|---|---|
+| ADR-001 | Initial project setup | Use Next.js App Router with Server Components by default. | Accepted | The application is content-heavy, benefits from static rendering, and targets Vercel. | Interactive features should be small Client Components; routes follow App Router conventions. |
+| ADR-002 | Initial project setup | Use TypeScript for application and content definitions. | Accepted | Shared types reduce drift between structured records and rendered pages. | New production and content code must type-check. |
+| ADR-003 | Initial project setup | Validate structured content with Zod. | Accepted | Git-managed content still needs clear runtime/build-time failures. | Schema changes require coordinated content updates and validation. |
+| ADR-004 | Initial project setup | Store Version 1 content as Git-managed TypeScript records. | Accepted | The initial collection is small, reviewable, and does not require operational infrastructure. | Content updates use pull requests; build-time search and static pages remain simple. |
+| ADR-005 | Initial project setup | Do not add a database for Version 1. | Accepted | Current data is public, static, and edited infrequently. | Features requiring writes, accounts, or high-frequency ingestion remain out of scope. |
+| ADR-006 | Initial project setup | Do not add a CMS for Version 1. | Accepted | Git review provides sufficient editorial control at current scale. | Reconsider only after the Git workflow becomes a demonstrated bottleneck. |
+| ADR-007 | Initial project setup | Organize educational material by the model-development lifecycle. | Accepted | The lifecycle gives newcomers a stable conceptual map. | Modules and glossary links should identify their lifecycle role. |
+| ADR-008 | Initial project setup | Organize companies by primary industry subsector. | Accepted | Subsector grouping supports discovery without implying that companies occupy only one stage. | Profiles retain multiple lifecycle roles; taxonomy changes require dashboard/map review. |
+| ADR-009 | Initial project setup | Use a qualitative cluster map before quantitative market positioning. | Accepted | Comparable market-share and relationship data is not yet available. | Node size and distance must not imply rank, scale, or proximity; captions and text equivalents are required. |
+| ADR-010 | Initial project setup | Keep curated news separate from future RSS ingestion. | Accepted | Editorial importance and automated recency are different signals. | External feeds must be labeled, resilient, and unable to overwrite curated records automatically. |
+| ADR-011 | Initial project setup | Make uncertainty and missing information visible. | Accepted | Private-company information is incomplete and marketing claims need attribution. | Unknown values remain null or labeled; estimates and inferences require explicit evidence labels. |
+| ADR-012 | Initial project setup | Use an editorial research-report visual direction. | Accepted | The product should foreground evidence, comparison, and readability rather than generic SaaS styling. | Follow restrained color, grid, typography, caption, and density rules in `VISUAL_DIRECTION.md`. |
+| ADR-013 | Initial project setup | Treat accessibility as a release requirement. | Accepted | The educational experience must work across keyboard, touch, screen readers, and responsive layouts. | Semantic HTML, focus states, contrast, text alternatives, reduced motion, and testing are required. |
+| ADR-014 | Initial project setup | Target Vercel for deployment. | Accepted | Vercel provides native Next.js support without architectural changes or Version 1 environment configuration. | Production metadata needs the canonical hostname; builds must remain Vercel-compatible. |
