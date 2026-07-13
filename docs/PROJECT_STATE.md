@@ -2,7 +2,7 @@
 
 Last updated: 2026-07-13  
 Current release: 0.1.0  
-Current milestone: Milestone 2 — Slice 1B complete and awaiting review
+Current milestone: Milestone 2 — Slice 2 complete and awaiting review
 
 Deployment status: Vercel production URL is configured as `https://ai-training-industry-research.vercel.app`; live availability was not verified during this documentation task.
 
@@ -26,17 +26,18 @@ Deployment status: Vercel production URL is configured as `https://ai-training-i
 - Stable educational-block IDs, optional block source mappings, and validation of block IDs and bibliography membership.
 - Server-rendered educational citation markers, detailed source rows, and module navigation derived from content blocks.
 - Expanded, source-backed pretraining section using two direct technical sources.
+- Complete flagship lifecycle module connecting pretraining, post-training, evaluation, inference, agent operation, industry roles, and feedback limitations.
+- Static module-body search coverage, accessible lifecycle mapping, worked example, and grouped links to glossary, companies, taxonomy anchors, and evidence.
 
 ## Partially Implemented
 
-- Educational coverage: the lifecycle overview exists, but individual stages do not yet have dedicated modules.
+- Educational coverage: the flagship lifecycle synthesis is complete, but individual stages do not yet have dedicated modules.
 - Company landscape: 3 of the 10 planned Version 1 profiles exist.
 - Subsector coverage: 2 subsectors contain companies; evaluation and specialized-data subsectors are empty.
 - Dashboard: reports research coverage but does not yet provide evidence-backed industry metrics.
 - Ecosystem map: clickable qualitative clusters exist; coverage is too thin for deeper analysis.
 - News: three curated records exist; external ingestion and editorial review workflow are not implemented.
-- Citation system: company profiles and the representative pretraining section use structured sources, but some news/source links are generic homepages rather than precise article URLs.
-- Lifecycle depth: pretraining now has a sourced representative section; post-training, evaluation, inference, and the surrounding orientation blocks remain concise and intentionally uncited pending the full flagship-module rewrite.
+- Citation system: company profiles and the flagship lifecycle module use structured sources, but some news/source links are generic homepages rather than precise article URLs.
 
 ## Not Started
 
@@ -53,7 +54,7 @@ Deployment status: Vercel production URL is configured as `https://ai-training-i
 - TypeScript, Zod, Tailwind CSS 4, npm, and Git-managed structured content.
 - Server Components by default with small Client Components for navigation and search.
 - Static pages plus statically generated company and glossary routes.
-- Content loaders validate 3 companies, 13 glossary terms, 3 news records, 8 sources, and 1 educational module, then verify referential integrity across collections and educational-block citations.
+- Content loaders validate 3 companies, 13 glossary terms, 3 news records, 16 sources, and 1 educational module, then verify referential integrity across collections and educational-block citations.
 - No database, CMS, API service, authentication, analytics, or hosted search.
 - Vercel-compatible build with no required environment variables.
 - A least-privilege GitHub Actions job runs lint, type-check, production build, and Chromium Playwright tests on Ubuntu with Node.js 20.
@@ -64,16 +65,16 @@ Deployment status: Vercel production URL is configured as `https://ai-training-i
 |---|---:|---|
 | Companies | 3 | Mercor, AfterQuery, Fleet |
 | Glossary terms | 13 | Core pretraining, post-training, feedback, annotation, evaluation, environment, and inference concepts |
-| Educational modules | 1 | Pretraining → post-training → evaluation → inference |
+| Educational modules | 1 | Complete lifecycle synthesis from pretraining through agent operation and feedback |
 | News records | 3 | Benchmark, company development, and research direction |
-| Source records | 8 | Five official company sources, one reporting source, and two direct technical sources |
+| Source records | 16 | Five official company sources, one reporting source, and ten direct technical or research sources |
 | Populated subsectors | 2 | Expert data platforms; RL environment providers |
 
 Company data status: 1 source-backed overview, 1 partial public-data profile, and 1 early-stage public-data profile.
 
 ## Current Test Coverage
 
-The browser suite defines nine behaviors in both desktop Chromium and Pixel 7 projects, producing 18 test cases when the full suite runs:
+The browser suite defines twelve behaviors in both desktop Chromium and Pixel 7 projects, producing 24 test cases when the full suite runs:
 
 - Primary-route availability and horizontal-overflow checks.
 - Home content, console-error, and framework-overlay checks.
@@ -81,13 +82,16 @@ The browser suite defines nine behaviors in both desktop Chromium and Pixel 7 pr
 - Complete Data annotation glossary route.
 - Repository-derived coverage counts and active-subsector language.
 - Cross-content search and category filtering.
+- Flagship module body search for post-training, evaluation, and agent-operation concepts.
 - Ecosystem-to-company navigation.
-- Derived lifecycle-module navigation, source markers, bibliography anchors, and sourced pretraining content.
+- Complete flagship outline and derived navigation.
+- Source markers, bibliography anchors, keyboard disclosures, and sourced lifecycle content.
+- Company, ecosystem-category, and evidence links from the flagship module.
 - Serious/critical axe checks on representative pages.
 
 Nine focused Playwright-runner tests cover valid and uncited blocks, duplicate identifiers across collections and within modules, unknown references, duplicate relationships and block source mappings, and parent-bibliography membership without starting a browser or development server.
 
-On 2026-07-13, lint, type-check, the production build, all 9 focused content tests, and all 18 browser tests passed locally. The production build required network access for the configured Google-hosted Geist font fetch.
+On 2026-07-13, lint, type-check, the production build, all 9 focused content tests, and all 24 browser tests passed locally. The production build required network access for the configured Google-hosted Geist font fetch.
 
 ## Known Issues
 
@@ -106,7 +110,7 @@ On 2026-07-13, lint, type-check, the production build, all 9 focused content tes
 
 - AfterQuery and Fleet lack verified founded-year and headquarters fields; all three profiles lack sourced headquarters data.
 - Business model and commercial data remain limited, especially for Fleet.
-- Only the representative pretraining section has attached educational sources; the rest of the lifecycle module still needs the approved research-depth pass.
+- Dedicated modules do not yet deepen supervised fine-tuning, preference optimization, evaluation, synthetic data, or agent environments beyond the flagship synthesis.
 - Several claims rely on company-stated material without independent corroboration.
 - The AfterQuery research news item points to a homepage rather than a direct publication URL.
 - No profiles yet represent evaluation platforms or specialized data providers.
@@ -120,4 +124,4 @@ On 2026-07-13, lint, type-check, the production build, all 9 focused content tes
 
 ## Recommended Next Milestone
 
-Review **Milestone 2 Slice 1B: block-level citation vertical slice**. After approval, proceed to the separately scoped flagship-module implementation; do not treat this representative section as the full rewrite.
+Review **Milestone 2 Slice 2: complete flagship lifecycle module**. After approval, scope the next company-research slice separately; do not begin profile-schema or research expansion implicitly.

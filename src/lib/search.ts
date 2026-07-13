@@ -1,4 +1,5 @@
 import { companies, educationalModules, glossary, news } from "@/lib/content";
+import type { EducationalModule } from "@/lib/schemas";
 
 export type SearchItem = {
   id: string;
@@ -8,6 +9,12 @@ export type SearchItem = {
   href: string;
   keywords: string;
 };
+
+function getVisibleBlockText(block: EducationalModule["sections"][number]) {
+  if (block.type === "paragraph") return [block.heading, block.body];
+  if (block.type === "callout" || block.type === "details") return [block.title, block.body];
+  return [block.name, block.summary, ...block.inputs, ...block.outputs];
+}
 
 export const searchIndex: SearchItem[] = [
   ...companies.map((company) => ({
@@ -32,7 +39,12 @@ export const searchIndex: SearchItem[] = [
     description: module.summary,
     category: "Foundations" as const,
     href: `/foundations/${module.slug}`,
-    keywords: [module.title, module.summary, ...module.glossaryTerms].join(" "),
+    keywords: [
+      module.title,
+      module.summary,
+      ...module.glossaryTerms,
+      ...module.sections.flatMap(getVisibleBlockText),
+    ].filter(Boolean).join(" "),
   })),
   ...news.map((item) => ({
     id: `news-${item.id}`,
