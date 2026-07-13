@@ -98,6 +98,18 @@ test("site search spans content types and category filters", async ({ page }) =>
   await expect(page.getByRole("link", { name: "Agent environment" })).toBeVisible();
 });
 
+test("flagship module body is searchable as one foundations result", async ({ page }) => {
+  await page.goto("/search");
+  const search = page.getByRole("searchbox", { name: "Search across the atlas" });
+  const moduleTitle = educationalModuleRecords[0].title;
+
+  for (const query of ["RLVR", "trajectory", "computer use", "evaluation", "agent environment"]) {
+    await search.fill(query);
+    await expect(page.getByRole("link", { name: moduleTitle, exact: true })).toBeVisible();
+    await expect(page.locator(".search-results").getByRole("link", { name: moduleTitle, exact: true })).toHaveCount(1);
+  }
+});
+
 test("ecosystem nodes link to company profiles", async ({ page }) => {
   await page.goto("/ecosystem");
   await page.locator(".ecosystem-nodes").getByRole("link", { name: /Fleet/ }).click();
@@ -105,9 +117,11 @@ test("ecosystem nodes link to company profiles", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1, name: "Fleet" })).toBeVisible();
 });
 
-test("model lifecycle uses derived navigation and block-level citations", async ({ page }) => {
+test("flagship lifecycle renders its full outline and derived navigation", async ({ page }) => {
   const moduleRecord = educationalModuleRecords[0];
   await page.goto("/foundations/model-lifecycle");
+
+  await expect(page.getByRole("heading", { level: 1, name: "From pretraining to agents: how the AI model-development lifecycle fits together" })).toBeVisible();
 
   const moduleRail = page.getByRole("navigation", { name: "Module navigation" });
   await expect(moduleRail.locator("a")).toHaveCount(moduleRecord.sections.length);
@@ -115,8 +129,33 @@ test("model lifecycle uses derived navigation and block-level citations", async 
     links.map((link) => link.getAttribute("href"))
   ))).toEqual(moduleRecord.sections.map((block) => `#${block.id}`));
 
+  for (const blockId of [
+    "learning-objective",
+    "system-map",
+    "pretraining",
+    "post-training",
+    "evaluation",
+    "inference-and-agents",
+    "worked-example",
+    "industry-fit",
+    "feedback-loop",
+    "evaluation-limitations",
+    "training-signal-limitations",
+    "continue-exploring",
+  ]) {
+    await expect(page.locator(`#${blockId}`), `${blockId} should render`).toBeVisible();
+  }
+
+  await expect(page.getByRole("figure", { name: "Model-development lifecycle and feedback loop" })).toBeVisible();
+  await expect(page.locator("#worked-example")).toContainText("illustrative synthesis");
+  await expect(page.locator("#worked-example")).toContainText("software-research agent");
+});
+
+test("flagship lifecycle citations and disclosures work without client scripting", async ({ page }) => {
+  await page.goto("/foundations/model-lifecycle");
+
   const pretraining = page.locator("#pretraining");
-  await expect(pretraining.getByRole("heading", { name: "01 · Pretraining" })).toBeVisible();
+  await expect(pretraining.getByRole("heading", { name: "01 · Pretraining builds a base model" })).toBeVisible();
   await expect(pretraining).toContainText("next token");
   await expect(pretraining).toContainText("does not guarantee reliable instruction following");
 
@@ -134,6 +173,39 @@ test("model lifecycle uses derived navigation and block-level citations", async 
   await expect(sourceRow).toContainText("primary");
   await expect(sourceRow).toContainText("Inferred");
   await expect(sourceRow).toContainText("Supported claims");
+
+  await expect(page.locator("#post-training .source-markers a").first()).toHaveAttribute("href", "#source-instructgpt-human-feedback");
+  await expect(page.locator("#evaluation .source-markers a")).toHaveCount(3);
+  await expect(page.locator("#inference-and-agents .source-markers a").last()).toHaveAttribute("href", "#source-webarena-agent-environment");
+
+  const evaluationLimits = page.locator("#evaluation-limitations");
+  const summary = evaluationLimits.locator("summary");
+  await summary.focus();
+  await page.keyboard.press("Enter");
+  await expect(evaluationLimits).toHaveAttribute("open", "");
+  await expect(evaluationLimits).toContainText("Benchmark contamination");
+});
+
+test("flagship lifecycle links to companies and active ecosystem categories", async ({ page }) => {
+  await page.goto("/foundations/model-lifecycle");
+
+  const categoryLinks = page.getByRole("navigation", { name: "Active Version 1 ecosystem categories" });
+  for (const subsector of activeVersion1Subsectors) {
+    await expect(categoryLinks.getByRole("link", { name: subsector.name })).toHaveAttribute(
+      "href",
+      `/ecosystem#cluster-${subsector.slug}`,
+    );
+  }
+
+  const continueExploring = page.locator("#continue-exploring").locator("xpath=following-sibling::*[1]");
+  for (const company of companyRecords) {
+    await expect(continueExploring.getByRole("link", { name: company.name, exact: true })).toHaveAttribute(
+      "href",
+      `/companies/${company.slug}`,
+    );
+  }
+  await expect(continueExploring.getByRole("link", { name: "Explore the ecosystem map" })).toHaveAttribute("href", "/ecosystem");
+  await expect(continueExploring.getByRole("link", { name: "Review the module bibliography" })).toHaveAttribute("href", "#module-sources-heading");
 });
 
 test("representative pages have no serious accessibility violations", async ({ page }) => {

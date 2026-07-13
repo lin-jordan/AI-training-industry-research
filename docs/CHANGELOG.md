@@ -16,6 +16,9 @@ This project uses a lightweight [Keep a Changelog](https://keepachangelog.com/en
 - Block-level validation for duplicate IDs, unknown or duplicate source mappings, and sources missing from the parent module bibliography.
 - Server-rendered citation markers and stable source-row anchors for educational modules.
 - Two direct technical sources supporting the representative pretraining section.
+- Complete flagship module, “From pretraining to agents: how the AI model-development lifecycle fits together.”
+- Eight direct research sources covering instruction tuning, DPO, RLVR, holistic evaluation, model graders, reasoning-and-action trajectories, web-agent environments, reward gaming, and distribution shift.
+- Worked software-research-agent example and grouped links to existing glossary entries, company profiles, active taxonomy anchors, and the module bibliography.
 
 ### Changed
 
@@ -24,6 +27,10 @@ This project uses a lightweight [Keep a Changelog](https://keepachangelog.com/en
 - The lifecycle module rail now derives its linked navigation from ordered content blocks.
 - The pretraining section now explains predictive objectives, base capabilities, limitations, and the role of later post-training and evaluation.
 - Source rows now show publication and review dates, source type, evidence status, supported claims, and a direct external link.
+- The model-lifecycle route now provides intermediate-depth sections on post-training, evaluation, inference, agent operation, industry roles, and feedback limitations while preserving the sourced pretraining section.
+- The lifecycle diagram now names agent operation within inference and includes a fuller text equivalent of the feedback loop.
+- Static search now indexes useful visible educational-block text while retaining one result per module.
+- Module-only styling now supports long-form stages, a worked-example callout, taxonomy links, and responsive exploration groups.
 
 ### Fixed
 
@@ -33,7 +40,7 @@ This project uses a lightweight [Keep a Changelog](https://keepachangelog.com/en
 ### Deferred
 
 - Research and educational depth work remains the recommended next milestone.
-- The full flagship-module rewrite, company-profile depth, and broader glossary expansion remain deferred to later Milestone 2 slices.
+- Company-profile depth and broader glossary expansion remain deferred to later Milestone 2 slices.
 
 ## 0.1.0 — Initial vertical slice
 

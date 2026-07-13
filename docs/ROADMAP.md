@@ -25,10 +25,12 @@ The roadmap prioritizes research credibility and educational depth before broade
 
 ## Milestone 2 — Research and educational depth
 
-**Status:** Next  
+**Status:** In progress — flagship lifecycle module complete
 **Recommended Codex reasoning:** High
 
 **Objective:** Increase credibility and teaching value before expanding product mechanics.
+
+**Current progress:** Referential integrity, block-level citations, and the complete flagship lifecycle synthesis are implemented. Existing-company research depth and later glossary work remain separately scoped.
 
 **User-visible result:** Stronger existing profiles, more precise sources, and dedicated modules that explain supervised fine-tuning, preference/RL methods, and evaluation.
 
