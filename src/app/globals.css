@@ -1100,8 +1100,21 @@ input[type="search"]::placeholder {
   line-height: 2;
 }
 
+.module-rail a {
+  text-decoration-color: transparent;
+}
+
+.module-rail a:hover,
+.module-rail a:focus-visible {
+  text-decoration-color: currentColor;
+}
+
 .module-content {
   max-width: 850px;
+}
+
+.module-content > [id] {
+  scroll-margin-top: 7rem;
 }
 
 .module-prose {
@@ -1118,6 +1131,19 @@ input[type="search"]::placeholder {
 .module-details p {
   color: var(--muted);
   font-size: 1.03rem;
+}
+
+.source-markers {
+  margin-left: 0.3em;
+  color: var(--blue);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.68em;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.source-markers a {
+  padding: 0.15em;
 }
 
 .module-stage {
@@ -1363,12 +1389,22 @@ input[type="search"]::placeholder {
 }
 
 .source-list li {
+  position: relative;
   display: grid;
   grid-template-columns: 50px 1fr auto;
   gap: 1rem;
   padding-block: 1rem;
   border-bottom: 1px solid var(--line);
   align-items: start;
+}
+
+.source-list > li:target {
+  background: var(--blue-soft);
+}
+
+.source-list__legacy-anchor {
+  position: absolute;
+  top: 0;
 }
 
 .source-list__number {
@@ -1381,11 +1417,64 @@ input[type="search"]::placeholder {
   font-weight: 600;
 }
 
-.source-list p {
-  margin-block: 0.3rem 0;
+.source-list__metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-block: 0.5rem 0;
   color: var(--faint);
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.65rem;
+}
+
+.source-list__metadata div {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.source-list__metadata dt {
+  font-weight: 650;
+}
+
+.source-list__metadata dd {
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.source-list__claims-label {
+  margin-block: 0.8rem 0.3rem;
+  color: var(--faint);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.65rem;
+  font-weight: 650;
+  text-transform: uppercase;
+}
+
+.source-list__claims {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.source-list__claims li {
+  display: list-item;
+  padding: 0;
+  border: 0;
+}
+
+.source-list__status {
+  display: grid;
+  justify-items: start;
+  gap: 0.4rem;
+}
+
+.source-list__status > span:first-child {
+  color: var(--faint);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.62rem;
+  text-transform: uppercase;
 }
 
 .map-reading-guide {
@@ -1605,7 +1694,7 @@ tbody th {
     grid-template-columns: 38px 1fr;
   }
 
-  .source-list .status-badge {
+  .source-list__status {
     grid-column: 2;
   }
 

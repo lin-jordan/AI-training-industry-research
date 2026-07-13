@@ -81,17 +81,23 @@ export const newsItemSchema = z.object({
   sourceType: z.enum(["official", "reporting", "research"]),
 });
 
+const contentBlockMetadata = {
+  id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+  sourceIds: z.array(z.string().min(1)).optional(),
+};
+
 const contentBlockSchema = z.discriminatedUnion("type", [
-  z.object({ type: z.literal("paragraph"), heading: z.string().optional(), body: z.string().min(1) }),
-  z.object({ type: z.literal("callout"), title: z.string().min(1), body: z.string().min(1) }),
+  z.object({ ...contentBlockMetadata, type: z.literal("paragraph"), heading: z.string().optional(), body: z.string().min(1) }),
+  z.object({ ...contentBlockMetadata, type: z.literal("callout"), title: z.string().min(1), body: z.string().min(1) }),
   z.object({
+    ...contentBlockMetadata,
     type: z.literal("stage"),
     name: z.string().min(1),
     summary: z.string().min(1),
     inputs: z.array(z.string().min(1)),
     outputs: z.array(z.string().min(1)),
   }),
-  z.object({ type: z.literal("details"), title: z.string().min(1), body: z.string().min(1) }),
+  z.object({ ...contentBlockMetadata, type: z.literal("details"), title: z.string().min(1), body: z.string().min(1) }),
 ]);
 
 export const educationalModuleSchema = z.object({

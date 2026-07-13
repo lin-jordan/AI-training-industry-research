@@ -1,49 +1,49 @@
-import type { EducationalModule } from "@/lib/schemas";
+import { SourceMarkers } from "@/components/source-markers";
+import type { EducationalModule, Source } from "@/lib/schemas";
 
 type ModuleContentProps = {
   module: EducationalModule;
+  sources: Source[];
 };
 
-export function ModuleContent({ module }: ModuleContentProps) {
+export function ModuleContent({ module, sources }: ModuleContentProps) {
   return (
     <div className="module-content">
-      {module.sections.map((block, index) => {
-        const key = `${block.type}-${index}`;
-
+      {module.sections.map((block) => {
         if (block.type === "paragraph") {
           return (
-            <section className="module-prose" key={key}>
+            <section className="module-prose" id={block.id} key={block.id}>
               {block.heading ? <h2>{block.heading}</h2> : null}
-              <p>{block.body}</p>
+              <p>{block.body}<SourceMarkers sourceIds={block.sourceIds} sources={sources} /></p>
             </section>
           );
         }
 
         if (block.type === "callout") {
           return (
-            <aside className="module-callout" key={key}>
+            <aside className="module-callout" id={block.id} key={block.id}>
               <p className="eyebrow">Key idea</p>
               <h2>{block.title}</h2>
-              <p>{block.body}</p>
+              <p>{block.body}<SourceMarkers sourceIds={block.sourceIds} sources={sources} /></p>
             </aside>
           );
         }
 
         if (block.type === "details") {
           return (
-            <details className="module-details" key={key}>
+            <details className="module-details" id={block.id} key={block.id}>
               <summary>{block.title}</summary>
-              <p>{block.body}</p>
+              <p>{block.body}<SourceMarkers sourceIds={block.sourceIds} sources={sources} /></p>
             </details>
           );
         }
 
         return (
-          <section className="module-stage" key={key}>
+          <section className="module-stage" id={block.id} key={block.id}>
             <div className="module-stage__heading">
               <p className="eyebrow">Lifecycle stage</p>
               <h2>{block.name}</h2>
-              <p>{block.summary}</p>
+              <p>{block.summary}<SourceMarkers sourceIds={block.sourceIds} sources={sources} /></p>
             </div>
             <div className="module-stage__io">
               <div>

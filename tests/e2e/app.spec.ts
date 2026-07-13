@@ -105,8 +105,39 @@ test("ecosystem nodes link to company profiles", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1, name: "Fleet" })).toBeVisible();
 });
 
+test("model lifecycle uses derived navigation and block-level citations", async ({ page }) => {
+  const moduleRecord = educationalModuleRecords[0];
+  await page.goto("/foundations/model-lifecycle");
+
+  const moduleRail = page.getByRole("navigation", { name: "Module navigation" });
+  await expect(moduleRail.locator("a")).toHaveCount(moduleRecord.sections.length);
+  expect(await moduleRail.locator("a").evaluateAll((links) => (
+    links.map((link) => link.getAttribute("href"))
+  ))).toEqual(moduleRecord.sections.map((block) => `#${block.id}`));
+
+  const pretraining = page.locator("#pretraining");
+  await expect(pretraining.getByRole("heading", { name: "01 · Pretraining" })).toBeVisible();
+  await expect(pretraining).toContainText("next token");
+  await expect(pretraining).toContainText("does not guarantee reliable instruction following");
+
+  const citationLinks = pretraining.locator(".source-markers a");
+  await expect(citationLinks).toHaveCount(2);
+  await expect(citationLinks.first()).toHaveAttribute("href", "#source-gpt3-few-shot-learners");
+  await expect(citationLinks.first()).toHaveAccessibleName("Source 1: Language Models are Few-Shot Learners");
+  await citationLinks.first().click();
+  await expect(page).toHaveURL(/#source-gpt3-few-shot-learners$/);
+
+  const sourceRow = page.locator("#source-gpt3-few-shot-learners");
+  await expect(sourceRow).toBeVisible();
+  await expect(sourceRow).toContainText("OpenAI");
+  await expect(sourceRow).toContainText("2020-05-28");
+  await expect(sourceRow).toContainText("primary");
+  await expect(sourceRow).toContainText("Inferred");
+  await expect(sourceRow).toContainText("Supported claims");
+});
+
 test("representative pages have no serious accessibility violations", async ({ page }) => {
-  for (const route of ["/", "/glossary", "/companies/mercor", "/dashboard", "/search"]) {
+  for (const route of ["/", "/foundations/model-lifecycle", "/glossary", "/companies/mercor", "/dashboard", "/search"]) {
     await page.goto(route);
     const results = await new AxeBuilder({ page }).analyze();
     const serious = results.violations.filter((violation) => ["serious", "critical"].includes(violation.impact ?? ""));

@@ -108,3 +108,67 @@ test("reports duplicate relationship values", () => {
     companies: [invalidCompany, ...validCollections.companies.slice(1)],
   })).toThrow(`[companies] record "mercor", field "relatedGlossaryTerms", value "${duplicateTerm}": duplicate relationship value`);
 });
+
+test("allows blocks without source mappings", () => {
+  expect(validCollections.modules[0].sections.some((block) => block.sourceIds === undefined)).toBeTruthy();
+  expect(() => validateContentReferences(validCollections)).not.toThrow();
+});
+
+test("reports duplicate educational block identifiers", () => {
+  const moduleRecord = validCollections.modules[0];
+  const duplicateBlockId = moduleRecord.sections[0].id;
+  const invalidModule: EducationalModule = {
+    ...moduleRecord,
+    sections: moduleRecord.sections.map((block, index) => (
+      index === 1 ? { ...block, id: duplicateBlockId } : block
+    )),
+  };
+
+  expect(() => validateContentReferences({ ...validCollections, modules: [invalidModule] })).toThrow(
+    `[modules] module "model-lifecycle", block "${duplicateBlockId}", field "id", value "${duplicateBlockId}": duplicate block identifier`,
+  );
+});
+
+test("reports unknown educational block source references", () => {
+  const moduleRecord = validCollections.modules[0];
+  const invalidModule: EducationalModule = {
+    ...moduleRecord,
+    sections: moduleRecord.sections.map((block) => (
+      block.id === "pretraining" ? { ...block, sourceIds: ["missing-source"] } : block
+    )),
+  };
+
+  expect(() => validateContentReferences({ ...validCollections, modules: [invalidModule] })).toThrow(
+    '[modules] module "model-lifecycle", block "pretraining", field "sourceIds", value "missing-source": unknown source reference',
+  );
+});
+
+test("reports duplicate educational block source mappings", () => {
+  const moduleRecord = validCollections.modules[0];
+  const duplicateSourceId = moduleRecord.sourceIds[0];
+  const invalidModule: EducationalModule = {
+    ...moduleRecord,
+    sections: moduleRecord.sections.map((block) => (
+      block.id === "pretraining" ? { ...block, sourceIds: [duplicateSourceId, duplicateSourceId] } : block
+    )),
+  };
+
+  expect(() => validateContentReferences({ ...validCollections, modules: [invalidModule] })).toThrow(
+    `[modules] module "model-lifecycle", block "pretraining", field "sourceIds", value "${duplicateSourceId}": duplicate relationship value`,
+  );
+});
+
+test("requires cited sources to be present in the module bibliography", () => {
+  const moduleRecord = validCollections.modules[0];
+  const sourceOutsideBibliography = "mercor-research";
+  const invalidModule: EducationalModule = {
+    ...moduleRecord,
+    sections: moduleRecord.sections.map((block) => (
+      block.id === "pretraining" ? { ...block, sourceIds: [sourceOutsideBibliography] } : block
+    )),
+  };
+
+  expect(() => validateContentReferences({ ...validCollections, modules: [invalidModule] })).toThrow(
+    `[modules] module "model-lifecycle", block "pretraining", field "sourceIds", value "${sourceOutsideBibliography}": source is not present in the parent module bibliography`,
+  );
+});
