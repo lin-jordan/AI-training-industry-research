@@ -2,7 +2,8 @@
 
 Last updated: 2026-07-13  
 Current release: 0.1.0  
-Current milestone: Project operating system and preparation for research-depth work  
+Current milestone: Milestone 2 — Slice 1A complete and awaiting review
+
 Deployment status: Vercel production URL is configured as `https://ai-training-industry-research.vercel.app`; live availability was not verified during this documentation task.
 
 ## Completed
@@ -10,7 +11,7 @@ Deployment status: Vercel production URL is configured as `https://ai-training-i
 - Responsive editorial application shell and shared navigation.
 - Homepage with lifecycle, company, glossary, map, and news previews.
 - Foundations index and one complete model-lifecycle module.
-- Searchable glossary with 12 full entry routes.
+- Searchable glossary with 13 full entry routes, including Data annotation.
 - Company directory and profiles for Mercor, AfterQuery, and Fleet.
 - Qualitative ecosystem map with accessible text equivalent.
 - Research-coverage dashboard using repository-derived values.
@@ -20,6 +21,8 @@ Deployment status: Vercel production URL is configured as `https://ai-training-i
 - Sitemap, robots metadata, custom icon, responsive styles, and reduced-motion support.
 - Playwright/axe test suite and beginner-oriented project README.
 - GitHub Actions quality checks for pull requests targeting `main` and pushes to `main`.
+- Cross-record validation for duplicate identifiers, unknown references, duplicate relationships, and company/module source mappings.
+- Extensible active Version 1 subsector registry with stable slugs for the four current categories.
 
 ## Partially Implemented
 
@@ -46,7 +49,7 @@ Deployment status: Vercel production URL is configured as `https://ai-training-i
 - TypeScript, Zod, Tailwind CSS 4, npm, and Git-managed structured content.
 - Server Components by default with small Client Components for navigation and search.
 - Static pages plus statically generated company and glossary routes.
-- Content loaders validate 3 companies, 12 glossary terms, 3 news records, 6 sources, and 1 educational module.
+- Content loaders validate 3 companies, 13 glossary terms, 3 news records, 6 sources, and 1 educational module, then verify referential integrity across collections.
 - No database, CMS, API service, authentication, analytics, or hosted search.
 - Vercel-compatible build with no required environment variables.
 - A least-privilege GitHub Actions job runs lint, type-check, production build, and Chromium Playwright tests on Ubuntu with Node.js 20.
@@ -56,7 +59,7 @@ Deployment status: Vercel production URL is configured as `https://ai-training-i
 | Collection | Count | Current coverage |
 |---|---:|---|
 | Companies | 3 | Mercor, AfterQuery, Fleet |
-| Glossary terms | 12 | Core pretraining, post-training, feedback, evaluation, environment, and inference concepts |
+| Glossary terms | 13 | Core pretraining, post-training, feedback, annotation, evaluation, environment, and inference concepts |
 | Educational modules | 1 | Pretraining → post-training → evaluation → inference |
 | News records | 3 | Benchmark, company development, and research direction |
 | Source records | 6 | Five official company sources and one reporting source |
@@ -66,20 +69,23 @@ Company data status: 1 source-backed overview, 1 partial public-data profile, an
 
 ## Current Test Coverage
 
-The Playwright suite defines six behaviors in both desktop Chromium and Pixel 7 projects, producing 12 test cases when the full suite runs:
+The browser suite defines eight behaviors in both desktop Chromium and Pixel 7 projects, producing 16 test cases when the full suite runs:
 
 - Primary-route availability and horizontal-overflow checks.
 - Home content, console-error, and framework-overlay checks.
 - Glossary filtering and empty state.
+- Complete Data annotation glossary route.
+- Repository-derived coverage counts and active-subsector language.
 - Cross-content search and category filtering.
 - Ecosystem-to-company navigation.
 - Serious/critical axe checks on representative pages.
 
-On 2026-07-13, lint, type-check, the production build, and all 12 Playwright test cases passed locally. The production build required network access for the configured Google-hosted Geist font fetch.
+Four focused Playwright-runner tests cover valid content, duplicate identifiers across all collections, unknown reference categories, and duplicate relationship values without starting a browser or development server.
+
+On 2026-07-13, lint, type-check, the production build, all 4 focused content tests, and all 16 browser tests passed locally. The production build required network access for the configured Google-hosted Geist font fetch.
 
 ## Known Issues
 
-- The dashboard displays `2/5` populated subsectors, while the current company schema defines four subsector values. The intended Version 1 taxonomy must be reconciled before expanding dashboard metrics.
 - The configured production URL is present in sitemap and robots metadata, but live deployment health is not represented in the repository.
 - The original scaffold favicon remains alongside the custom icon route; browser icon precedence should be checked in a release QA pass.
 - npm previously reported moderate PostCSS advisories through the installed Next.js dependency; the suggested forced fix would be breaking and requires an upstream-safe upgrade path.
@@ -88,8 +94,7 @@ On 2026-07-13, lint, type-check, the production build, and all 12 Playwright tes
 
 - Long global stylesheet with many page-specific selectors; acceptable for the vertical slice but should be modularized only when repeated maintenance becomes costly.
 - Search is substring/token based and will need ranking or synonym support as content grows.
-- Content relationships are string slugs without cross-record referential validation.
-- Source IDs are validated structurally but not checked automatically for broken references or duplicate IDs.
+- Content relationships remain string slugs; validation now checks existence and duplicates but intentionally does not force reciprocal links.
 - Sitemap hostname is hard-coded rather than derived from deployment configuration.
 
 ## Research Gaps
@@ -103,7 +108,6 @@ On 2026-07-13, lint, type-check, the production build, and all 12 Playwright tes
 
 ## Decisions Required
 
-- Confirm whether Version 1 has four or five company subsectors and define the missing category if five.
 - Define minimum evidence and completeness criteria for a company to move between data-status levels.
 - Decide which educational modules constitute the minimum coherent Version 1 curriculum.
 - Confirm the canonical production URL and deployment ownership before formal release.
@@ -111,4 +115,4 @@ On 2026-07-13, lint, type-check, the production build, and all 12 Playwright tes
 
 ## Recommended Next Milestone
 
-Complete the **Research and Educational Depth** milestone before adding broad features. Strengthen the three existing profiles, attach precise sources, resolve taxonomy and status criteria, and add focused modules on supervised fine-tuning, preference/RL methods, and evaluation. This improves the product's core value—credible explanation and research—while preserving the current architecture.
+Proceed to **Milestone 2 Slice 1B: block-level citation vertical slice**. Add stable educational-block IDs, optional block source mappings, detailed source rendering, derived module navigation, and one sourced section without rewriting the full flagship module.

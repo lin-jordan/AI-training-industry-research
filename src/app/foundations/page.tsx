@@ -11,13 +11,15 @@ export const metadata: Metadata = {
 };
 
 export default function FoundationsPage() {
+  const latestReview = educationalModules.map((module) => module.lastReviewed).sort().at(-1);
+
   return (
     <div className="page-shell">
       <PageIntro
         eyebrow="Industry foundations"
         title="A field guide to how models improve."
         description="Start with the lifecycle. Each module links technical ideas to the data, people, and infrastructure required to make them work."
-        meta="1 module · Last reviewed 2026-07-12"
+        meta={`${educationalModules.length} ${educationalModules.length === 1 ? "module" : "modules"}${latestReview ? ` · Last reviewed ${latestReview}` : ""}`}
       />
       <section className="section">
         <SectionHeading

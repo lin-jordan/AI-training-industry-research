@@ -35,6 +35,17 @@ export const glossaryRecords = [
     relatedModules: ["model-lifecycle"],
   },
   {
+    slug: "data-annotation",
+    term: "Data annotation",
+    shortDefinition: "The process of adding labels, judgments, corrections, or other structure to data used for training or evaluation.",
+    fullDefinition: "Data annotation turns raw or generated material into examples that an AI system can learn from or be measured against. Depending on the task, annotators may classify content, write demonstrations, compare responses, apply a rubric, correct an output, or review a sequence of actions.",
+    whyItMatters: "Annotation makes human and domain expertise explicit enough to guide training and evaluation, while annotation quality directly affects the reliability of the resulting signal.",
+    example: "A software engineer reviews an agent's terminal session, marks whether each action is valid, and records a corrected solution for supervised fine-tuning.",
+    relatedTerms: ["supervised-fine-tuning", "preference-data", "evaluation"],
+    relatedCompanies: ["mercor", "afterquery"],
+    relatedModules: ["model-lifecycle"],
+  },
+  {
     slug: "preference-data",
     term: "Preference data",
     shortDefinition: "Human or model judgments that compare outputs or score their quality.",

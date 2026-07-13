@@ -23,7 +23,7 @@ export default function CompaniesPage() {
         eyebrow="Company landscape"
         title="The organizations behind better model behavior."
         description="Companies are grouped by primary subsector. Profiles emphasize capabilities, lifecycle roles, source quality, and what remains undisclosed."
-        meta="3 researched profiles · 10 planned"
+        meta={`${companies.length} researched profiles · 10 planned`}
       />
       {Array.from(subsectors.entries()).map(([subsector, groupedCompanies]) => (
         <section className="section" key={subsector}>

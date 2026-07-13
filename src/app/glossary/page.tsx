@@ -15,7 +15,7 @@ export default function GlossaryPage() {
         eyebrow="Glossary"
         title="The vocabulary behind model improvement."
         description="Short definitions establish orientation. Full entries explain why each concept matters and where it appears in practice."
-        meta="12 terms · Keyboard and touch accessible"
+        meta={`${glossary.length} terms · Keyboard and touch accessible`}
       />
       <GlossarySearch terms={glossary} />
     </div>

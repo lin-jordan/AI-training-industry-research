@@ -8,18 +8,25 @@ This project uses a lightweight [Keep a Changelog](https://keepachangelog.com/en
 
 - Project blueprint, state record, roadmap, decision log, research guide, content style guide, contribution guide, and GitHub collaboration templates.
 - GitHub Actions quality workflow for linting, type-checking, production builds, and Chromium Playwright tests on pull requests and pushes to `main`.
+- Complete Data annotation glossary entry and generated entry route.
+- Referential validation for duplicate identifiers, unknown references, duplicate relationship values, and existing company/module source mappings.
+- Extensible registry for the four active Version 1 subsectors, with stable category slugs.
+- Focused content-validation coverage using the existing Playwright test runner without a browser.
 
 ### Changed
 
-- No application behavior, styling, schemas, dependencies, or content records changed in the project-operating-system task.
+- Homepage, glossary, foundations, company, ecosystem, and dashboard coverage counts now derive from validated repository data where appropriate.
+- Dashboard and ecosystem copy now state that 2 of 4 active subsectors are represented.
 
 ### Fixed
 
-- Nothing yet.
+- Resolved the dangling `data-annotation` glossary relationship.
+- Corrected the dashboard's five-subsector denominator inconsistency.
 
 ### Deferred
 
 - Research and educational depth work remains the recommended next milestone.
+- Block-level citations, the flagship-module rewrite, company-profile depth, and broader glossary expansion remain deferred to later Milestone 2 slices.
 
 ## 0.1.0 — Initial vertical slice
 
