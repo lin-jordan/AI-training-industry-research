@@ -12,11 +12,18 @@ This project uses a lightweight [Keep a Changelog](https://keepachangelog.com/en
 - Referential validation for duplicate identifiers, unknown references, duplicate relationship values, and existing company/module source mappings.
 - Extensible registry for the four active Version 1 subsectors, with stable category slugs.
 - Focused content-validation coverage using the existing Playwright test runner without a browser.
+- Stable IDs and optional source mappings for educational content blocks.
+- Block-level validation for duplicate IDs, unknown or duplicate source mappings, and sources missing from the parent module bibliography.
+- Server-rendered citation markers and stable source-row anchors for educational modules.
+- Two direct technical sources supporting the representative pretraining section.
 
 ### Changed
 
 - Homepage, glossary, foundations, company, ecosystem, and dashboard coverage counts now derive from validated repository data where appropriate.
 - Dashboard and ecosystem copy now state that 2 of 4 active subsectors are represented.
+- The lifecycle module rail now derives its linked navigation from ordered content blocks.
+- The pretraining section now explains predictive objectives, base capabilities, limitations, and the role of later post-training and evaluation.
+- Source rows now show publication and review dates, source type, evidence status, supported claims, and a direct external link.
 
 ### Fixed
 
@@ -26,7 +33,7 @@ This project uses a lightweight [Keep a Changelog](https://keepachangelog.com/en
 ### Deferred
 
 - Research and educational depth work remains the recommended next milestone.
-- Block-level citations, the flagship-module rewrite, company-profile depth, and broader glossary expansion remain deferred to later Milestone 2 slices.
+- The full flagship-module rewrite, company-profile depth, and broader glossary expansion remain deferred to later Milestone 2 slices.
 
 ## 0.1.0 — Initial vertical slice
 

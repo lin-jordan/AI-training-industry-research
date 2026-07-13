@@ -67,4 +67,32 @@ export const sourceRecords = [
     supportedClaims: ["APEX benchmark context", "expert-authored professional tasks"],
     evidenceLabel: "Reported",
   },
+  {
+    id: "gpt3-few-shot-learners",
+    title: "Language Models are Few-Shot Learners",
+    publisher: "OpenAI",
+    url: "https://arxiv.org/abs/2005.14165",
+    publicationDate: "2020-05-28",
+    reviewedDate: "2026-07-13",
+    sourceType: "primary",
+    supportedClaims: [
+      "Autoregressive language-model pretraining uses next-token prediction over a large text corpus.",
+      "A pretrained base model can transfer broad language capabilities to multiple downstream tasks.",
+    ],
+    evidenceLabel: "Inferred",
+  },
+  {
+    id: "foundation-models-report",
+    title: "On the Opportunities and Risks of Foundation Models",
+    publisher: "Stanford Center for Research on Foundation Models",
+    url: "https://arxiv.org/abs/2108.07258",
+    publicationDate: "2021-08-16",
+    reviewedDate: "2026-07-13",
+    sourceType: "research",
+    supportedClaims: [
+      "Foundation models are trained on broad data and adapted to a wide range of downstream tasks.",
+      "A broadly pretrained model remains incomplete and can carry defects into downstream adaptations.",
+    ],
+    evidenceLabel: "Inferred",
+  },
 ] satisfies Source[];

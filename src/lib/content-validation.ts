@@ -28,6 +28,16 @@ function describeIssue(
   return `[${collection}] record "${record}", field "${field}", value "${value}": ${issue}`;
 }
 
+function describeBlockIssue(
+  moduleSlug: string,
+  blockId: string,
+  field: string,
+  value: string,
+  issue: string,
+) {
+  return `[modules] module "${moduleSlug}", block "${blockId}", field "${field}", value "${value}": ${issue}`;
+}
+
 function findDuplicateValues(values: readonly string[]) {
   const seen = new Set<string>();
   const duplicates = new Set<string>();
@@ -100,6 +110,51 @@ export function validateContentReferences(collections: ContentCollections) {
     validateReferences(issues, "modules", moduleRecord.slug, "glossaryTerms", moduleRecord.glossaryTerms, glossarySlugs, "glossary");
     validateReferences(issues, "modules", moduleRecord.slug, "relatedCompanies", moduleRecord.relatedCompanies, companySlugs, "companies");
     validateReferences(issues, "modules", moduleRecord.slug, "sourceIds", moduleRecord.sourceIds, sourceIds, "sources");
+
+    for (const duplicateBlockId of findDuplicateValues(moduleRecord.sections.map((block) => block.id))) {
+      issues.push(describeBlockIssue(
+        moduleRecord.slug,
+        duplicateBlockId,
+        "id",
+        duplicateBlockId,
+        "duplicate block identifier",
+      ));
+    }
+
+    const bibliographySourceIds = new Set(moduleRecord.sourceIds);
+    for (const block of moduleRecord.sections) {
+      const blockSourceIds = block.sourceIds ?? [];
+
+      for (const duplicateSourceId of findDuplicateValues(blockSourceIds)) {
+        issues.push(describeBlockIssue(
+          moduleRecord.slug,
+          block.id,
+          "sourceIds",
+          duplicateSourceId,
+          "duplicate relationship value",
+        ));
+      }
+
+      for (const sourceId of blockSourceIds) {
+        if (!sourceIds.has(sourceId)) {
+          issues.push(describeBlockIssue(
+            moduleRecord.slug,
+            block.id,
+            "sourceIds",
+            sourceId,
+            "unknown source reference",
+          ));
+        } else if (!bibliographySourceIds.has(sourceId)) {
+          issues.push(describeBlockIssue(
+            moduleRecord.slug,
+            block.id,
+            "sourceIds",
+            sourceId,
+            "source is not present in the parent module bibliography",
+          ));
+        }
+      }
+    }
   }
 
   if (issues.length > 0) {
