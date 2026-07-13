@@ -19,6 +19,7 @@ Deployment status: Vercel production URL is configured as `https://ai-training-i
 - Zod validation for all structured content collections.
 - Sitemap, robots metadata, custom icon, responsive styles, and reduced-motion support.
 - Playwright/axe test suite and beginner-oriented project README.
+- GitHub Actions quality checks for pull requests targeting `main` and pushes to `main`.
 
 ## Partially Implemented
 
@@ -48,6 +49,7 @@ Deployment status: Vercel production URL is configured as `https://ai-training-i
 - Content loaders validate 3 companies, 12 glossary terms, 3 news records, 6 sources, and 1 educational module.
 - No database, CMS, API service, authentication, analytics, or hosted search.
 - Vercel-compatible build with no required environment variables.
+- A least-privilege GitHub Actions job runs lint, type-check, production build, and Chromium Playwright tests on Ubuntu with Node.js 20.
 
 ## Current Content Coverage
 
@@ -73,7 +75,7 @@ The Playwright suite defines six behaviors in both desktop Chromium and Pixel 7 
 - Ecosystem-to-company navigation.
 - Serious/critical axe checks on representative pages.
 
-The browser suite was inspected but not executed during this documentation-only task. On 2026-07-13, lint and type-check passed, and the production build passed after network access was permitted for the configured Google-hosted Geist font fetch.
+On 2026-07-13, lint, type-check, the production build, and all 12 Playwright test cases passed locally. The production build required network access for the configured Google-hosted Geist font fetch.
 
 ## Known Issues
 
