@@ -10,12 +10,21 @@ import {
   newsItemSchema,
   sourceSchema,
 } from "@/lib/schemas";
+import { validateContentReferences } from "@/lib/content-validation";
 
 export const sources = sourceSchema.array().parse(sourceRecords);
 export const companies = companySchema.array().parse(companyRecords);
 export const glossary = glossaryTermSchema.array().parse(glossaryRecords);
 export const news = newsItemSchema.array().parse(newsRecords);
 export const educationalModules = educationalModuleSchema.array().parse(educationalModuleRecords);
+
+validateContentReferences({
+  companies,
+  glossary,
+  modules: educationalModules,
+  sources,
+  news,
+});
 
 export function getCompany(slug: string) {
   return companies.find((company) => company.slug === slug);

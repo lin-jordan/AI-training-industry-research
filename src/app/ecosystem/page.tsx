@@ -3,6 +3,7 @@ import Link from "next/link";
 import { EcosystemMap } from "@/components/ecosystem-map";
 import { PageIntro } from "@/components/page-intro";
 import { companies } from "@/lib/content";
+import { activeVersion1Subsectors, countRepresentedSubsectors } from "@/lib/taxonomy";
 
 export const metadata: Metadata = {
   title: "Ecosystem map",
@@ -10,13 +11,15 @@ export const metadata: Metadata = {
 };
 
 export default function EcosystemPage() {
+  const representedSubsectors = countRepresentedSubsectors(companies);
+
   return (
     <div className="page-shell">
       <PageIntro
         eyebrow="Ecosystem map"
         title="A qualitative map of a changing market."
         description="The first map organizes companies by their primary emphasis. It deliberately avoids quantitative placement until comparable evidence exists."
-        meta="3 companies · 2 populated subsectors"
+        meta={`${companies.length} companies · ${representedSubsectors} of ${activeVersion1Subsectors.length} active subsectors represented`}
       />
       <section className="section">
         <EcosystemMap companies={companies} />

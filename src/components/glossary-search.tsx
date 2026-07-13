@@ -27,7 +27,7 @@ export function GlossarySearch({ terms }: GlossarySearchProps) {
           type="search"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search 12 terms"
+          placeholder={`Search ${terms.length} terms`}
           autoComplete="off"
         />
       </div>

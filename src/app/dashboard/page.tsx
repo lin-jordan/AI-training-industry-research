@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PageIntro } from "@/components/page-intro";
 import { StatusBadge } from "@/components/status-badge";
 import { companies } from "@/lib/content";
+import { activeVersion1Subsectors, countRepresentedSubsectors } from "@/lib/taxonomy";
 
 export const metadata: Metadata = {
   title: "Research dashboard",
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 
 export default function DashboardPage() {
   const sourceBacked = companies.filter((company) => company.dataStatus === "Source-backed overview").length;
+  const representedSubsectors = countRepresentedSubsectors(companies);
 
   return (
     <div className="page-shell">
@@ -21,9 +23,15 @@ export default function DashboardPage() {
         meta="Repository-derived metrics · No market estimates"
       />
       <section className="metric-grid" aria-label="Research coverage metrics">
-        <article><span className="metadata">Profile coverage</span><strong>3<span>/10</span></strong><p>Version 1 companies researched</p></article>
-        <article><span className="metadata">Subsectors populated</span><strong>2<span>/5</span></strong><p>Current landscape regions</p></article>
-        <article><span className="metadata">Source-backed</span><strong>{sourceBacked}<span>/3</span></strong><p>Profiles at the strongest current status</p></article>
+        <article><span className="metadata">Profile coverage</span><strong>{companies.length}<span>/10</span></strong><p>Version 1 companies researched</p></article>
+        <article>
+          <span className="metadata">Subsector coverage</span>
+          <strong>
+            {representedSubsectors}<span> of {activeVersion1Subsectors.length} active subsectors represented</span>
+          </strong>
+          <p>Active Version 1 taxonomy</p>
+        </article>
+        <article><span className="metadata">Source-backed</span><strong>{sourceBacked}<span>/{companies.length}</span></strong><p>Profiles at the strongest current status</p></article>
         <article><span className="metadata">Last review</span><strong className="metric-date">12<span>Jul 2026</span></strong><p>Most recent research pass</p></article>
       </section>
       <section className="section dashboard-table-wrap">

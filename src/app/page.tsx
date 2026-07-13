@@ -3,7 +3,7 @@ import { CompanyCard } from "@/components/company-card";
 import { EcosystemMap } from "@/components/ecosystem-map";
 import { LifecycleFlow } from "@/components/lifecycle-flow";
 import { SectionHeading } from "@/components/section-heading";
-import { companies, glossary, news } from "@/lib/content";
+import { companies, educationalModules, glossary, news } from "@/lib/content";
 
 export default function Home() {
   return (
@@ -24,9 +24,9 @@ export default function Home() {
       </section>
 
       <div className="hero-index" aria-label="Current research coverage">
-        <div><span className="metadata">Profiles</span><strong>3 / 10 planned</strong></div>
-        <div><span className="metadata">Glossary</span><strong>12 core terms</strong></div>
-        <div><span className="metadata">Modules</span><strong>1 foundation</strong></div>
+        <div><span className="metadata">Profiles</span><strong>{companies.length} / 10 planned</strong></div>
+        <div><span className="metadata">Glossary</span><strong>{glossary.length} core terms</strong></div>
+        <div><span className="metadata">Modules</span><strong>{educationalModules.length} {educationalModules.length === 1 ? "foundation" : "foundations"}</strong></div>
         <div><span className="metadata">Evidence</span><strong>Claim-labeled</strong></div>
       </div>
 
@@ -56,7 +56,7 @@ export default function Home() {
         <SectionHeading
           eyebrow="03 · Working vocabulary"
           title="Learn the language of the stack."
-          description="Twelve concise definitions connect training methods to the companies and lifecycle stages where they matter."
+          description={`${glossary.length} concise definitions connect training methods to the companies and lifecycle stages where they matter.`}
           action={<Link className="text-link" href="/glossary">Search all terms <span aria-hidden="true">→</span></Link>}
         />
         <div className="glossary-preview">
