@@ -52,20 +52,37 @@ Open `http://localhost:3000`. Stop the server with `Control-C` in the terminal.
 
 ## Validate changes
 
-Run the standard checks before committing:
+GitHub automatically runs the full quality suite for every pull request targeting `main` and every push to `main`. Do not merge a pull request while a check is pending or failing. Open the failed job in the pull request's **Checks** tab to see the command and error output.
+
+To reproduce the clean CI installation locally, use the committed lockfile:
+
+```bash
+npm ci
+```
+
+Install Chromium once if Playwright has not already downloaded it:
+
+```bash
+npx playwright install chromium
+```
+
+Then run the same validation commands as CI:
 
 ```bash
 npm run lint
 npm run typecheck
 npm run build
-```
-
-For page, interaction, responsive, or accessibility changes, also run:
-
-```bash
-npx playwright install chromium
 npm run test:e2e
 ```
+
+Each check has a distinct purpose:
+
+- `npm run lint` checks source files against the repository's ESLint rules.
+- `npm run typecheck` asks TypeScript to verify types without emitting files.
+- `npm run build` creates the production Next.js build and validates static content generation.
+- `npm run test:e2e` runs the desktop and mobile Playwright scenarios, including representative accessibility scans.
+
+CI installs only Chromium and its required Ubuntu system dependencies before the browser suite. No secrets or local environment variables are required for these checks.
 
 Explain any failed command in the pull request. Do not silence a check or modify unrelated application code merely to make the output green.
 
@@ -163,5 +180,6 @@ A change is complete when:
 - [ ] `npm run typecheck` passes.
 - [ ] `npm run build` passes.
 - [ ] Relevant browser, mobile, interaction, and accessibility checks pass.
+- [ ] Required GitHub quality checks are complete and passing.
 - [ ] `PROJECT_STATE.md`, `CHANGELOG.md`, and the decision log are updated when applicable.
 - [ ] The pull request explains the change, evidence, limitations, and validation results.

@@ -7,6 +7,7 @@ This project uses a lightweight [Keep a Changelog](https://keepachangelog.com/en
 ### Added
 
 - Project blueprint, state record, roadmap, decision log, research guide, content style guide, contribution guide, and GitHub collaboration templates.
+- GitHub Actions quality workflow for linting, type-checking, production builds, and Chromium Playwright tests on pull requests and pushes to `main`.
 
 ### Changed
 
